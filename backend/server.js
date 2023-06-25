@@ -1,17 +1,27 @@
-const express = require('express');
-require('dotenv').config();
+const express = require("express");
+const TwitterApi = require("twitter-api-v2").TwitterApi;
+require("dotenv").config();
 const app = express();
 
-const Twit = require('twit');
-
-const T = new Twit({
-  consumer_key: process.env.TWITTER_CONSUMER_KEY,
-  consumer_secret: process.env.TWITTER_SECRET_KEY,
-  access_token: process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+const client = new TwitterApi({
+  appKey: process.env.TWITTER_CONSUMER_KEY,
+  appSecret: process.env.TWITTER_SECRET_KEY,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-// Make Twitter API calls using T object
+app.get("/tweets", async (req, res) => {
+  try {
+    const roClient = client.readOnly; // Get a client to read data
+    const user = await roClient.v2.userByUsername("elonmusk"); // Get user's details
+    const { data: tweets } = await roClient.v2.userTimeline(user.data.id); // Fetch user's tweets
+
+    res.status(200).json(tweets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while fetching tweets" });
+  }
+});
 
 const port = 5000;
 app.listen(port, () => {
