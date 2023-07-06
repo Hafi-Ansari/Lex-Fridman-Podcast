@@ -1,8 +1,8 @@
-const express = require("express");
-require("dotenv").config();
+require('dotenv').config();
+const express = require('express');
+const getVideos = require('./routes/getVideos');
 const app = express();
 
-const port = 5000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.use('/getVideos', getVideos);
+
+app.listen(3000, () => console.log('Listening on port 3000'));
