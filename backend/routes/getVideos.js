@@ -19,8 +19,15 @@ router.get("/", async (req, res) => {
       type: "video", // only return videos (exclude playlists etc.)
     });
 
-    const videoIds = response.data.items.map((item) => item.id.videoId);
-    res.json(videoIds);
+    const videos = response.data.items.map((item) => {
+      return {
+        id: item.id.videoId,
+        title: item.snippet.title,
+        publishedAt: item.snippet.publishedAt
+      };
+    });
+
+    res.json(videos);
   } catch (error) {
     console.log(error);
     res.status(500).send();
