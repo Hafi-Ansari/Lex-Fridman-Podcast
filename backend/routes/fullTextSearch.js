@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
         size: 10,
       },
     });
-    return body.hits.hits;
+    res.json(body.hits.hits)
   } catch (error) {
     res.status(500).json({ error: "An error occurred while searching" });
   }
