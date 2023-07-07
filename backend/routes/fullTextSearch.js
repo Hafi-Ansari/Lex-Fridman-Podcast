@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
         query: {
           match_phrase: { transcript: query },
         },
-        size: 100,
+        size: 1,
       },
     });
     res.json(body.hits.hits)
