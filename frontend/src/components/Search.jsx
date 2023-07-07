@@ -26,16 +26,17 @@ const Search = ({ searchResult, query }) => {
   }
 
   return (
-    <div className="p-4 rounded bg-teal-900 text-white">
-      <div>{displayedTranscript}</div>
-      {!showFullTranscript && displayedTranscript && (
+    <div className="p-4 rounded bg-midGreen text-white">
+      <div>
         <button
-          className="text-teal-300 underline mt-2"
+          className="p-2 rounded-xl w-21 mb-2 bg-midAccentGreen hover:opacity-50"
           onClick={toggleShowFullTranscript}
         >
-          Show Full Transcript
+          This Is The Title
         </button>
-      )}
+      </div>
+      {displayedTranscript}
+      {!showFullTranscript && displayedTranscript}
     </div>
   );
 };

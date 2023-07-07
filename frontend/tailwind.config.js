@@ -9,6 +9,7 @@ export default {
         darkGreen: "#023420",
         midGreen: "#00684A",
         lightGreen: "#00ED64",
+        midAccentGreen: "#00533b",
       },
     },
   },
