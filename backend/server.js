@@ -6,7 +6,7 @@ const app = express();
 
 
 
-//app.use("/getVideos", getVideos);
-app.use("/fullTextSearch", fullTextSearch);
+app.use("/getVideos", getVideos);
+app.use("/fullTextSearch", fullTextSearchRouter );
 
 app.listen(3000, () => console.log("Listening on port 3000"));
