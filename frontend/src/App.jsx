@@ -1,9 +1,9 @@
-import Tweet from "./components/Tweet";
+import SearchPage from "./pages/searchpage";
 
 function App() {
   return (
     <div>
-      <Tweet/>
+      <SearchPage/>
     </div>
   );
 }
