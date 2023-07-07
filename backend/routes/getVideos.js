@@ -13,8 +13,8 @@ router.get("/", async (req, res) => {
   try {
     const response = await youtube.search.list({
       part: "snippet",
-      channelId: "UCJIfeSCssxSC_Dhc5s7woww", // replace with the target channel ID
-      maxResults: 10,
+      channelId: "UCSHZKyawb77ixDdsGog4iWA", // replace with the target channel ID
+      maxResults: 100,
       order: "date", // to get the videos based on the upload date
       type: "video", // only return videos (exclude playlists etc.)
     });
