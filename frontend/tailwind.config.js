@@ -6,6 +6,7 @@ export default {
       colors: {
         // Add your color theme here
         primaryBackground: "#001E2B",
+        dlp: "#012416",
         darkGreen: "#023420",
         midGreen: "#00684A",
         lightGreen: "#00ED64",

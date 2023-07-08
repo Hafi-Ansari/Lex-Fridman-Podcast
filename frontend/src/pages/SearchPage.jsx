@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Search from "../components/Search";
+import DropdownMenu from "../components/DropDown";
 import logo from "../assets/logo.png";
 import { fetchData } from "../services/dataFetch";
 
@@ -7,6 +8,8 @@ const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isQuerySent, setIsQuerySent] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
 
   const handleType = (event) => {
     const newSearchTerm = event.target.value;
@@ -33,17 +36,23 @@ const SearchPage = () => {
         </div>
         <h1 className="text-4xl font-bold">Lex Fridman Go</h1>
       </div>
-      <div className="w-full max-w-lg mt-6">
+      <div className="flex items-center w-full max-w-2xl mt-6 space-x-0">
+        <DropdownMenu
+          options={options}
+          selected={selectedOption}
+          onSelectedChange={setSelectedOption}
+          className="rounded-l bg-darkGreen text-white"
+        />
         <input
           type="text"
           placeholder="Search..."
-          className="w-full p-4 rounded bg-darkGreen text-white placeholder-midGreen focus:outline-none focus:ring-2 focus:ring-midGreen"
+          className="w-full p-4 rounded-r bg-darkGreen text-white placeholder-midGreen outline-none ring-2 ring-midGreen"
           value={searchTerm}
           onKeyDown={handleSearch}
           onChange={handleType}
         />
       </div>
-      <div className="w-full max-w-lg mt-6 space-y-3">
+      <div className="w-full max-w-2xl mt-6 space-y-3">
         {isQuerySent &&
           searchResult.map((result, index) => (
             <Search
