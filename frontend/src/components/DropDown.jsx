@@ -35,7 +35,7 @@ const DropdownMenu = ({ options, selected, onSelectedChange }) => {
   return (
     <div
       ref={ref}
-      className="relative inline-block text-left w-32 border-midGreen border-2 rounded-l"
+      className="relative inline-block text-left w-48 border-midGreen border-2 rounded-l"
     >
       <div
         className={`w-full h-14 flex items-center px-4 rounded bg-dlp text-white cursor-pointer text-sm ${
@@ -43,10 +43,10 @@ const DropdownMenu = ({ options, selected, onSelectedChange }) => {
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selected || "Select..."}
+        {selected || "Select Type..."}
       </div>
       {isOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+        <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="py-1" role="menu">
             {renderedOptions}
           </div>

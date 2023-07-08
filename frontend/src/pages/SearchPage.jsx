@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Search from "../components/Search";
 import DropdownMenu from "../components/DropDown";
+import LoadingSpinner from "../components/LoadingSpinner";
 import logo from "../assets/logo.png";
 import { fetchData } from "../services/dataFetch";
 
@@ -9,7 +10,14 @@ const SearchPage = () => {
   const [isQuerySent, setIsQuerySent] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
+  const [isLoading, setIsLoading] = useState(false)
+
+  const options = [
+    "Phrase Search",
+    "Full-Text Search",
+    "Fuzzy Search",
+    "Proximity Search",
+  ];
 
   const handleType = (event) => {
     const newSearchTerm = event.target.value;
@@ -18,10 +26,12 @@ const SearchPage = () => {
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
+      setIsLoading(true)
       const fetchDataAsync = async () => {
         const result = await fetchData(searchTerm);
         console.log(result);
         setSearchResult(result); // save the entire result
+        setIsLoading(false)
       };
       fetchDataAsync();
       setIsQuerySent(true);
@@ -51,6 +61,7 @@ const SearchPage = () => {
           onKeyDown={handleSearch}
           onChange={handleType}
         />
+        {isLoading && <LoadingSpinner/>}
       </div>
       <div className="w-full max-w-2xl mt-6 space-y-3">
         {isQuerySent &&
