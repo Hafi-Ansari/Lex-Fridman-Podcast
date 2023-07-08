@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 
-const Search = ({ searchResult, query }) => {
+const Search = ({ title, transcript, date, query }) => {
   const [showFullTranscript, setShowFullTranscript] = useState(false);
 
   const toggleShowFullTranscript = () => {
     setShowFullTranscript((prevValue) => !prevValue);
   };
 
-  let displayedTranscript = searchResult;
+  let displayedTranscript = transcript;
+
+  let beforeQuery = "";
+  let afterQuery = "";
+  let queryText = "";
 
   if (!showFullTranscript) {
-    const words = searchResult.split(" "); // Split the transcript into words
+    const words = transcript.split(" "); // Split the transcript into words
     const queryIndex = words.findIndex((word) =>
       word.toLowerCase().includes(query.toLowerCase())
     ); // Find the index of the query term (case-insensitive)
@@ -19,24 +23,32 @@ const Search = ({ searchResult, query }) => {
       const start = Math.max(0, queryIndex - 10); // Starting index (10 words before the query)
       const end = Math.min(words.length, queryIndex + 10 + 1); // Ending index (10 words after the query + 1 for inclusive slice)
 
-      displayedTranscript = words.slice(start, end).join(" "); // Extract the portion of the transcript with 10 words before and after the query
+      beforeQuery = words.slice(start, queryIndex).join(" ") + " ";
+      queryText = words[queryIndex];
+      afterQuery = " " + words.slice(queryIndex + 1, end).join(" ");
     } else {
       displayedTranscript = ""; // Query term not found
     }
   }
 
   return (
-    <div className="p-4 rounded bg-midGreen text-white">
+    <div className="p-4 rounded bg-midGreen text-white overflow-y-auto overflow-x-hidden max-h-64">
       <div>
         <button
           className="p-2 rounded-xl w-21 mb-2 bg-midAccentGreen hover:opacity-50"
           onClick={toggleShowFullTranscript}
         >
-          This Is The Title
+          {title} - {date}
         </button>
       </div>
-      {displayedTranscript}
-      {!showFullTranscript && displayedTranscript}
+      {!showFullTranscript && (
+        <span>
+          {beforeQuery}
+          <span className="bg-midAccentGreen">{queryText}</span>
+          {afterQuery}
+        </span>
+      )}
+      {showFullTranscript && displayedTranscript}
     </div>
   );
 };

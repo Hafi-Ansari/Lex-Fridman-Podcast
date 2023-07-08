@@ -6,7 +6,7 @@ import { fetchData } from "../services/dataFetch";
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isQuerySent, setIsQuerySent] = useState(false);
-  const [searchResult, setSearchResult] = useState("test")
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleType = (event) => {
     const newSearchTerm = event.target.value;
@@ -15,11 +15,11 @@ const SearchPage = () => {
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
-      async function fetchDataAsync() {
-        const result = await fetchData(searchTerm); // Pass the searchTerm to fetchData
+      const fetchDataAsync = async () => {
+        const result = await fetchData(searchTerm);
         console.log(result);
-        setSearchResult(result[0]._source.transcript)
-      }
+        setSearchResult(result); // save the entire result
+      };
       fetchDataAsync();
       setIsQuerySent(true);
     }
@@ -44,7 +44,16 @@ const SearchPage = () => {
         />
       </div>
       <div className="w-full max-w-lg mt-6 space-y-3">
-        {isQuerySent && <Search searchResult={searchResult} query={searchTerm}/>}
+        {isQuerySent &&
+          searchResult.map((result, index) => (
+            <Search
+              key={index}
+              title={result._source.title}
+              transcript={result._source.transcript}
+              date={result._source.date}
+              query={searchTerm}
+            />
+          ))}
       </div>
     </div>
   );
