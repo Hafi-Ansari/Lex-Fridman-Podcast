@@ -1,1 +1,57 @@
-This is a project to create a search engine web application for the Lex Fridman Podcast. The user selects the type of search they would like to make, types a query into the search bar, and any results of the query they search for will be shown from the transcripts of the Lex Fridman Clips channel. 
+This is a project to create a search engine web application for the Lex Fridman Podcast. The user selects the type of search they would like to make (between phrase searching, fuzzy searching, proximity searching, and full-text searching), types a query into the search bar, and any results of the query they search for will be shown from the transcripts of the Lex Fridman Clips channel. 
+
+Tech-Stack: React.js, Node.js, Express.js, MongoDB, Elastic Cloud, Python, PyMongo, Youtube Data API v3, YouTubeTranscriptApi
+
+Transcript:
+  This is a directory that holds a Python venv and the requesite libraries necessary to take a list of YouTube video IDs, retrieve their transcription through the YouTubeTranscriptApi, clean them, and send them to MongoDB using PyMongo. 
+
+Backend:
+  Routes:
+    getVideos.js: Using the Youtube Data API v3, this API endpoint retrieves a list of 100 YouTube video IDs from a specified channel through the 
+      channel ID
+    search routes (4 js riles): Each of these routes makes a request to the Elastic Cloud index of Youtube video transcripts synced from MongoDB. 
+      The response to the query depends on the type of search made (out of full text search, fuzzy search, phrase search, and proximity search). 
+    server.js: Imports route handlers, configures the routes, sets up the server 
+  
+Frontend:
+  src: All the files to render the frontend properly. Services has dataFetch.js, which exports all the fetch requests to the API endpoints set up in the backend. This single page application has a single page called SearchPage, which contains all te components of the search engine. User selects the type of search they want to make through the dropdown menu, enters their query, and the fetch requests load in the transcript, title, and date of every video that contains the query result(s), bolded to indicate each result in the transcript. Modal view available for full transcript for each video. 
+
+
+Not In Repository: You will have to use either ElasticSearch or Elastic Cloud to connect with your MongoDB database to index everything yourself. On Elastic Cloud, good practice is to sync one index instance with MongoDB, and create another index instance that maps to the specific properties you desire. 
+
+Libraries:
+
+Python:
+  Brotli==1.0.9
+  certifi==2023.5.7
+  chardet==5.1.0
+  charset-normalizer==3.1.0
+  idna==3.4
+  requests==2.31.0
+  urllib3==2.0.3
+  youtube-transcript-api==0.6.1
+
+
+Node.js: 
+  frontend:
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.3.9"
+  backend:
+    "@elastic/elasticsearch": "^7.17.11-patch.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "googleapis": "^120.0.0",
+    "nodemon": "^2.0.22",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "twitter-api-v2": "^1.15.0"
