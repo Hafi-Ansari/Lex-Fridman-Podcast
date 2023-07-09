@@ -10,7 +10,7 @@ const SearchPage = () => {
   const [isQuerySent, setIsQuerySent] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const options = [
     "Phrase Search",
@@ -26,12 +26,12 @@ const SearchPage = () => {
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
-      setIsLoading(true)
+      setIsLoading(true);
       const fetchDataAsync = async () => {
         const result = await fetchData(searchTerm);
         console.log(result);
         setSearchResult(result); // save the entire result
-        setIsLoading(false)
+        setIsLoading(false);
       };
       fetchDataAsync();
       setIsQuerySent(true);
@@ -61,8 +61,8 @@ const SearchPage = () => {
           onKeyDown={handleSearch}
           onChange={handleType}
         />
-        {isLoading && <LoadingSpinner/>}
       </div>
+      {isLoading && <LoadingSpinner />}
       <div className="w-full max-w-2xl mt-6 space-y-3">
         {isQuerySent &&
           searchResult.map((result, index) => (
