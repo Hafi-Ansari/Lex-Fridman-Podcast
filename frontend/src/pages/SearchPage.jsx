@@ -3,7 +3,12 @@ import Search from "../components/Search";
 import DropdownMenu from "../components/DropDown";
 import LoadingSpinner from "../components/LoadingSpinner";
 import logo from "../assets/logo.png";
-import { fetchData } from "../services/dataFetch";
+import {
+  fetchFull,
+  fetchFuzzy,
+  fetchPhrase,
+  fetchProximity,
+} from "../services/dataFetch";
 
 const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,6 +16,7 @@ const SearchPage = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOptionSelected, setIsOptionSelected] = useState(true);
 
   const options = [
     "Phrase Search",
@@ -26,9 +32,31 @@ const SearchPage = () => {
 
   const handleSearch = (event) => {
     if (event.key === "Enter") {
+      if (!selectedOption) {
+        setIsOptionSelected(false);
+        return;
+      }
+      setIsOptionSelected(true);
       setIsLoading(true);
       const fetchDataAsync = async () => {
-        const result = await fetchData(searchTerm);
+        let result;
+        switch (selectedOption) {
+          case "Phrase Search":
+            result = await fetchPhrase(searchTerm);
+            break;
+          case "Full-Text Search":
+            result = await fetchFull(searchTerm);
+            break;
+          case "Fuzzy Search":
+            result = await fetchFuzzy(searchTerm);
+            break;
+          case "Proximity Search":
+            result = await fetchProximity(searchTerm);
+            break;
+          default:
+            console.error("Invalid search option");
+            return;
+        }
         console.log(result);
         setSearchResult(result); // save the entire result
         setIsLoading(false);
@@ -63,6 +91,7 @@ const SearchPage = () => {
         />
       </div>
       {isLoading && <LoadingSpinner />}
+      {!isOptionSelected && <div className="mt-4 text-red-600">Please select a search type.</div>}
       <div className="w-full max-w-2xl mt-6 space-y-3">
         {isQuerySent &&
           searchResult.map((result, index) => (

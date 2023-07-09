@@ -15,18 +15,14 @@ const Search = ({ title, transcript, date, query }) => {
   let queryText = "";
 
   if (!showFullTranscript) {
-    const words = transcript.split(" "); // Split the transcript into words
-    const queryIndex = words.findIndex((word) =>
-      word.toLowerCase().includes(query.toLowerCase())
-    ); // Find the index of the query term (case-insensitive)
+    const regex = new RegExp(`(${query})`, "gi");
+    const match = transcript.match(regex);
 
-    if (queryIndex !== -1) {
-      const start = Math.max(0, queryIndex - 10); // Starting index (10 words before the query)
-      const end = Math.min(words.length, queryIndex + 10 + 1); // Ending index (10 words after the query + 1 for inclusive slice)
-
-      beforeQuery = words.slice(start, queryIndex).join(" ") + " ";
-      queryText = words[queryIndex];
-      afterQuery = " " + words.slice(queryIndex + 1, end).join(" ");
+    if (match) {
+      const splitTranscript = transcript.split(regex);
+      beforeQuery = splitTranscript[0];
+      queryText = match[0];
+      afterQuery = splitTranscript[2];
     } else {
       displayedTranscript = ""; // Query term not found
     }
