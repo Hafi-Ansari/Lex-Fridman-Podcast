@@ -10,12 +10,17 @@ router.get("/", async (req, res) => {
       index: "search-podcast-all",
       body: {
         query: {
-          match: { transcript: query },
+          match_phrase: {
+            transcript: {
+              query: query,
+              slop: 10,
+            },
+          },
         },
         size: 99,
       },
     });
-    res.json(body.hits.hits)
+    res.json(body.hits.hits);
   } catch (error) {
     res.status(500).json({ error: "An error occurred while searching" });
   }
