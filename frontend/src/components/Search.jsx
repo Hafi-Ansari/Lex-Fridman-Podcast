@@ -29,7 +29,7 @@ const Search = ({ title, transcript, date, query }) => {
   }
 
   return (
-    <div className="p-4 rounded bg-midGreen text-white overflow-y-auto overflow-x-hidden max-h-64">
+    <div className="p-4 bg-midGreen text-white overflow-y-auto overflow-x-hidden max-h-64 scrollbar-custom">
       <div>
         <button
           className="p-2 rounded-xl w-21 mb-2 bg-midAccentGreen hover:opacity-50"

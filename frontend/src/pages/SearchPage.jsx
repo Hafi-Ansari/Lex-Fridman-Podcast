@@ -20,11 +20,11 @@ const SearchPage = () => {
   const [isOptionSelected, setIsOptionSelected] = useState(true);
 
   const options = [
+    "General Search",
     "Phrase Search",
     "Full-Text Search",
     "Fuzzy Search",
     "Proximity Search",
-    "General Search",
   ];
 
   const handleType = (event) => {
@@ -79,7 +79,7 @@ const SearchPage = () => {
         </div>
         <h1 className="text-4xl font-bold">Lex Fridman Go</h1>
       </div>
-      <div className="flex items-center w-full max-w-2xl mt-6 space-x-0">
+      <div className="flex items-center w-full max-w-3xl mt-6 space-x-0">
         <DropdownMenu
           options={options}
           selected={selectedOption}
@@ -99,7 +99,7 @@ const SearchPage = () => {
       {!isOptionSelected && (
         <div className="mt-4 text-red-600">Please select a search type.</div>
       )}
-      <div className="w-full max-w-2xl mt-6 space-y-3">
+      <div className="w-full max-w-6xl mt-6 space-y-3">
         {isQuerySent &&
           searchResult.map((result, index) => (
             <Search
