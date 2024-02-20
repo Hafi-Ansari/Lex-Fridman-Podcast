@@ -8,6 +8,7 @@ import {
   fetchFuzzy,
   fetchPhrase,
   fetchProximity,
+  fetchSearch,
 } from "../services/dataFetch";
 
 const SearchPage = () => {
@@ -23,6 +24,7 @@ const SearchPage = () => {
     "Full-Text Search",
     "Fuzzy Search",
     "Proximity Search",
+    "General Search",
   ];
 
   const handleType = (event) => {
@@ -52,6 +54,9 @@ const SearchPage = () => {
             break;
           case "Proximity Search":
             result = await fetchProximity(searchTerm);
+            break;
+          case "General Search": // New case for the general search
+            result = await fetchSearch(searchTerm);
             break;
           default:
             console.error("Invalid search option");
@@ -91,15 +96,17 @@ const SearchPage = () => {
         />
       </div>
       {isLoading && <LoadingSpinner />}
-      {!isOptionSelected && <div className="mt-4 text-red-600">Please select a search type.</div>}
+      {!isOptionSelected && (
+        <div className="mt-4 text-red-600">Please select a search type.</div>
+      )}
       <div className="w-full max-w-2xl mt-6 space-y-3">
         {isQuerySent &&
           searchResult.map((result, index) => (
             <Search
               key={index}
-              title={result._source.title}
-              transcript={result._source.transcript}
-              date={result._source.date}
+              title={result.title} // Corrected
+              transcript={result.transcript}
+              date={result.date}
               query={searchTerm}
             />
           ))}

@@ -45,3 +45,14 @@ export async function fetchProximity(query) {
     console.error('Error in fetchData:', error);
   }
 }
+
+export async function fetchSearch(query) {
+  const url = `${import.meta.env.VITE_BACKEND_SERVER_URL}/search?q=${encodeURIComponent(query)}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error in fetchData:', error);
+  }
+}
