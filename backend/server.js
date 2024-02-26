@@ -23,5 +23,4 @@ app.use("/phraseSearch", phraseSearchRouter);
 app.use("/proximitySearch", proximitySearchRouter);
 app.use("/search", searchRouter);
 
-// Listener
-app.listen(3000, () => console.log("Listening on port 3000"));
+module.exports = app;
