@@ -5,7 +5,7 @@ const PodcastEpisode = require('../models/PodcastEpisode'); // Adjust the path a
 // New search route
 router.get('/', async (req, res) => {
   try {
-    const { q: searchText } = req.query; // Extract search text from query parameters
+    const { q: searchText, page = 1, limit = 10 } = req.query; // Default to page 1, limit 10
     if (!searchText) {
       return res.status(400).json({ message: 'Search query is required' });
     }
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
       score: { $meta: 'textScore' }
     }).sort({
       score: { $meta: 'textScore' }
-    });
+    }).skip((page - 1) * limit).limit(limit);
 
     res.json(searchResult);
   } catch (error) {
